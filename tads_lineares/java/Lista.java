@@ -4,12 +4,12 @@ public class Lista {
     // Atributos
     private int array[];
     private int n;
-
+    
+    // Construtores
     public Lista() {
         this(10);
     }
 
-    // Construtores
     public Lista(int tamanho) {
         this.n = 0;
         array = new int[tamanho];

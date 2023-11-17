@@ -21,6 +21,7 @@ public class Countingsort extends Array {
         int[] count = new int[getMaior() + 1];
         int[] ordenado = new int[n];
 
+        // Inicializar as posições do array count como 0
         for (int i = 0; i < count.length; count[i] = 0, i++);
 
         for (int i = 0; i < n; count[array[i]]++, i++);

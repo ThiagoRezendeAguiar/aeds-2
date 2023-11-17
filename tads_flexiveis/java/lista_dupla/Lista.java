@@ -1,0 +1,117 @@
+package tads_flexiveis.java.lista_dupla;
+
+public class Lista {
+    private Celula primeiro, ultimo;
+    private int n;
+
+    public Lista(){
+        this.primeiro = this.ultimo = new Celula();
+        this.n = 0;
+    }
+
+    public void inserirInicio(int num) {
+        Celula aux = new Celula(num);
+        aux.setAnt(primeiro);
+        aux.setProx(primeiro.getProx());
+        primeiro.setProx(aux);
+        if (primeiro == ultimo) {
+            ultimo = aux;
+        } else {
+            aux.getProx().setAnt(aux);
+        }
+        aux = null;
+        n++;
+    }
+
+    public void inserir(int pos, int num) throws Exception {
+        if (pos < 0 || pos >= n) {
+            throw new Exception("Posição Inválida");
+        } else if (pos == 0) {
+            inserirInicio(num);
+        } else if (pos == n - 1) {
+            inserirFim(num);
+        } else {
+            Celula i = primeiro;
+            for (int j = 0; j < pos; j++, i = i.getProx());
+            Celula aux = new Celula(num);
+            aux.setAnt(i);
+            aux.setProx(i.getProx());
+            aux.getAnt().setProx(aux);
+            aux.getProx().setAnt(aux);
+            aux = i = null;
+            n++;
+        }
+
+    }
+
+    public void inserirFim(int num) {
+        ultimo.setProx(new Celula(num));
+        ultimo.getProx().setAnt(ultimo);
+        ultimo = ultimo.getProx();
+        n++;
+    }
+
+    public void removerInicio() throws Exception {
+        if (primeiro == ultimo) {
+            throw new Exception("Lista Vazia");
+        }
+
+        Celula aux = primeiro;
+        primeiro = primeiro.getProx();
+        primeiro.setAnt(null);
+        aux.setProx(null);
+        aux = null;
+        n--;
+    }
+
+    public void remover(int pos) throws Exception {
+        if (primeiro == ultimo) {
+            throw new Exception("Lista Vazia");
+        } else if (pos < 0 || pos >= n) {
+            throw new Exception("Posição Inválida");
+        } else if (pos == 0) {
+            removerInicio();
+        } else if (pos == n - 1) {
+            removerFim();
+        } else {
+            Celula i = primeiro;
+            for (int j = 0; j < pos; j++, i = i.getProx());
+            i.getAnt().setProx(i.getProx());
+            i.getProx().setAnt(i.getAnt());
+            i.setProx(null);
+            i.setAnt(null);
+            i = null;
+            n--;
+        }
+    }
+
+    public void removerFim() throws Exception {
+        if (primeiro == ultimo) {
+            throw new Exception("Lista Vazia");
+        }
+        ultimo = ultimo.getAnt();
+        ultimo.getProx().setAnt(null);
+        ultimo.setProx(null);
+        n--;
+    }
+
+    public void mostrar() {
+        for (Celula i = primeiro.getProx(); i != null; i = i.getProx()) {
+            System.out.println(i.getElemento() + " ");
+        }
+    }
+
+    public boolean pesquisar(int num) {
+        boolean resp = false;
+
+        for (Celula i = primeiro.getProx(); i != null; i = i.getProx()) {
+            if (i.getElemento() == num) {
+                resp = true;
+                i = null;
+            }
+        }
+
+        return resp;
+    }
+}
+
